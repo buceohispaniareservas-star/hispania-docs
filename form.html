@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buceo Hispania — Documentación</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ocean:#0B4F6C;--ocean-mid:#1A6E8E;--ocean-light:#E8F4F8;
+  --surface:#F7FAFB;--white:#fff;--ink:#0D1B22;--muted:#6B8898;
+  --border:#D4E5ED;--green:#1A9E6E;--green-bg:#E6F7F2;
+  --amber:#D97706;--amber-bg:#FEF3C7;--red:#DC2626;
+}
+body{font-family:'Inter',sans-serif;background:#E8F4F8;min-height:100vh;padding:0 0 40px;}
+
+.wrapper{max-width:480px;margin:0 auto;}
+
+/* HEADER */
+.header{
+  background:linear-gradient(160deg,#0a3d56 0%,#0B4F6C 60%,#0d6080 100%);
+  padding:28px 24px 0;
+  text-align:center;
+  color:white;
+}
+.logo{font-size:36px;margin-bottom:8px;}
+.brand{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:14px;}
+.doc-box{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;
+  padding:12px 18px;
+  margin-bottom:20px;
+}
+.doc-box-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:white;margin-bottom:2px;}
+.doc-box-sub{font-size:13px;color:rgba(255,255,255,0.8);}
+
+/* LANG SELECTOR */
+.lang-block{border-top:1px solid rgba(255,255,255,0.12);padding:16px 0 20px;}
+.lang-prompt{font-size:11px;color:rgba(255,255,255,0.55);margin-bottom:12px;font-weight:500;letter-spacing:0.03em;}
+.lang-prompt span{margin:0 5px;opacity:0.4;}
+.lang-selector{display:flex;justify-content:center;gap:12px;}
+.lang-btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 20px;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,0.07);cursor:pointer;transition:all 0.2s;}
+.lang-btn:hover{background:rgba(255,255,255,0.15);}
+.lang-btn.active{background:rgba(255,255,255,0.2);border-color:rgba(255,255,255,0.6);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+.lang-flag{font-size:30px;line-height:1;}
+.lang-name{font-size:10px;font-weight:700;color:rgba(255,255,255,0.75);letter-spacing:0.06em;}
+
+/* FORM BODY */
+.form-body{background:white;padding:24px;border-radius:0 0 16px 16px;margin-bottom:0;}
+
+.greeting{background:var(--ocean-light);border-left:3px solid var(--ocean);padding:12px 16px;border-radius:0 10px 10px 0;margin-bottom:24px;font-size:14px;color:var(--ocean);font-weight:500;line-height:1.5;}
+
+.section-label{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+.section-badge{background:var(--ocean);color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.section-text{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--ocean);}
+
+.form-field{margin-bottom:20px;}
+.form-field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.form-field label .req{color:var(--red);}
+.form-field input[type=text]{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'Inter',sans-serif;color:var(--ink);outline:none;transition:border-color 0.2s;}
+.form-field input[type=text]:focus{border-color:var(--ocean);}
+.form-field input[type=text].filled{border-color:var(--green);background:var(--green-bg);}
+
+.upload-group{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.upload-btn{border:2px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;background:var(--surface);cursor:pointer;transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.upload-btn:hover,.upload-btn:active{border-color:var(--ocean);background:var(--ocean-light);}
+.upload-btn.done{border-color:var(--green);background:var(--green-bg);border-style:solid;}
+.upload-btn input[type=file]{display:none;}
+.ub-icon{font-size:24px;margin-bottom:6px;}
+.ub-label{font-size:12px;font-weight:600;color:var(--ocean);margin-bottom:3px;}
+.upload-btn.done .ub-label{color:var(--green);}
+.ub-sub{font-size:10px;color:var(--muted);line-height:1.4;}
+
+.warning-box{display:flex;align-items:flex-start;gap:6px;background:#FFFBEB;border:1px solid #FCD34D;border-radius:8px;padding:8px 12px;margin-top:8px;font-size:11px;color:#92400E;line-height:1.5;}
+
+.divider{border:none;border-top:1px solid var(--border);margin:4px 0 22px;}
+
+/* COMPANION CARD */
+.companion-card{border:2px solid var(--border);border-radius:14px;margin-bottom:16px;overflow:hidden;}
+.companion-header{background:linear-gradient(135deg,#1A6E8E,#0B4F6C);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;}
+.companion-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:white;}
+.btn-remove{background:rgba(255,255,255,0.15);border:none;color:white;font-size:12px;font-weight:600;padding:5px 12px;border-radius:7px;cursor:pointer;}
+.companion-body{padding:16px;}
+.companion-body .form-field{margin-bottom:16px;}
+.companion-body .form-field:last-child{margin-bottom:0;}
+
+.btn-add-companion{width:100%;padding:16px;background:white;border:2px dashed var(--ocean);border-radius:14px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--ocean);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;margin-bottom:20px;-webkit-tap-highlight-color:transparent;}
+.btn-add-companion:hover{background:var(--ocean-light);border-style:solid;}
+.plus-icon{font-size:22px;font-weight:300;line-height:1;}
+
+.btn-submit{width:100%;padding:17px;background:var(--ocean);color:white;border:none;border-radius:14px;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;cursor:pointer;transition:background 0.2s;margin-bottom:10px;}
+.btn-submit:hover{background:var(--ocean-mid);}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;}
+
+.privacy{text-align:center;font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:48px 24px;background:white;border-radius:0 0 16px 16px;}
+.success-screen.show{display:block;}
+.success-icon{font-size:56px;margin-bottom:16px;}
+.success-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--green);margin-bottom:8px;}
+.success-sub{font-size:15px;color:var(--muted);line-height:1.6;}
+
+/* LOADING */
+.loading-screen{text-align:center;padding:60px 24px;background:white;border-radius:0 0 16px 16px;}
+.loading-icon{font-size:40px;margin-bottom:16px;animation:spin 2s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ERROR */
+.error-screen{text-align:center;padding:60px 24px;background:white;border-radius:0 0 16px 16px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:white;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:500;transition:transform 0.3s;z-index:100;white-space:nowrap;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <!-- HEADER siempre visible -->
+  <div class="header">
+    <div class="logo">🤿</div>
+    <div class="brand">Buceo Hispania</div>
+    <div class="doc-box">
+      <div class="doc-box-title" id="hdr-title">Documentación necesaria para el buceo</div>
+      <div class="doc-box-sub" id="hdr-sub">en la Reserva de Cabo Tiñoso</div>
+    </div>
+    <div class="lang-block">
+      <div class="lang-prompt">
+        <span id="lp-es">Elige tu idioma</span>
+        <span>·</span>
+        <span id="lp-en">Choose your language</span>
+        <span>·</span>
+        <span id="lp-fr">Choisissez votre langue</span>
+      </div>
+      <div class="lang-selector">
+        <button class="lang-btn active" onclick="setLang('es',this)">
+          <span class="lang-flag">🇪🇸</span><span class="lang-name">ESP</span>
+        </button>
+        <button class="lang-btn" onclick="setLang('en',this)">
+          <span class="lang-flag">🇬🇧</span><span class="lang-name">ENG</span>
+        </button>
+        <button class="lang-btn" onclick="setLang('fr',this)">
+          <span class="lang-flag">🇫🇷</span><span class="lang-name">FRA</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="screen-loading" class="loading-screen">
+    <div class="loading-icon">🌊</div>
+    <p style="color:var(--muted);font-size:14px;">Cargando...</p>
+  </div>
+
+  <!-- ERROR -->
+  <div id="screen-error" class="error-screen" style="display:none;">
+    <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+    <p style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--red);margin-bottom:8px;">Link no válido</p>
+    <p style="color:var(--muted);font-size:14px;">Este enlace no existe o ha expirado. Contacta con Buceo Hispania.</p>
+  </div>
+
+  <!-- FORM -->
+  <div id="screen-form" style="display:none;">
+    <div class="form-body">
+      <div class="greeting" id="form-greeting"></div>
+
+      <!-- TITULAR -->
+      <div class="section-label">
+        <span class="section-badge" id="lbl-titular">Titular</span>
+        <span class="section-text" id="lbl-your-data">Tus datos</span>
+      </div>
+
+      <div class="form-field">
+        <label id="lbl-fullname">Nombre completo <span class="req">*</span></label>
+        <input type="text" id="input-nombre" placeholder="Tu nombre completo" autocomplete="off">
+      </div>
+
+      <div class="form-field">
+        <label id="lbl-dninum">📄 Número de DNI / Pasaporte <span class="req">*</span></label>
+        <input type="text" id="input-dni-num" placeholder="12345678A" autocomplete="off">
+      </div>
+
+      <div class="form-field">
+        <label id="lbl-dniphoto">📄 Foto del DNI <span class="req">*</span></label>
+        <div class="upload-group">
+          <div class="upload-btn" id="btn-dni-file" onclick="triggerFile('file-dni-file','btn-dni-file','dni_archivo')">
+            <input type="file" id="file-dni-file" accept="image/*,.pdf" onchange="handleFile(this,'btn-dni-file','dni_archivo')">
+            <div class="ub-icon">📎</div>
+            <div class="ub-label" id="lbl-attach-1">Adjuntar archivo</div>
+            <div class="ub-sub">PDF, JPG o PNG</div>
+          </div>
+          <div class="upload-btn" id="btn-dni-cam" onclick="triggerFile('file-dni-cam','btn-dni-cam','dni_foto')">
+            <input type="file" id="file-dni-cam" accept="image/*" capture="environment" onchange="handleFile(this,'btn-dni-cam','dni_foto')">
+            <div class="ub-icon">📷</div>
+            <div class="ub-label" id="lbl-photo-1">Hacer foto</div>
+            <div class="ub-sub" id="lbl-camera-1">Con la cámara</div>
+          </div>
+        </div>
+        <div class="warning-box">⚠️ <span id="lbl-warning">Solo la <strong>parte delantera</strong> del DNI. No es necesario fotografiar el reverso.</span></div>
+      </div>
+
+      <!-- TITULACIÓN (condicional) -->
+      <div class="form-field" id="field-tit" style="display:none;">
+        <label id="lbl-tit">🏅 Titulación de buceo <span class="req">*</span></label>
+        <div class="upload-group">
+          <div class="upload-btn" id="btn-tit-file" onclick="triggerFile('file-tit-file','btn-tit-file','tit_archivo')">
+            <input type="file" id="file-tit-file" accept="image/*,.pdf" onchange="handleFile(this,'btn-tit-file','tit_archivo')">
+            <div class="ub-icon">📎</div>
+            <div class="ub-label" id="lbl-attach-2">Adjuntar archivo</div>
+            <div class="ub-sub">PDF, JPG o PNG</div>
+          </div>
+          <div class="upload-btn" id="btn-tit-cam" onclick="triggerFile('file-tit-cam','btn-tit-cam','tit_foto')">
+            <input type="file" id="file-tit-cam" accept="image/*" capture="environment" onchange="handleFile(this,'btn-tit-cam','tit_foto')">
+            <div class="ub-icon">📷</div>
+            <div class="ub-label" id="lbl-photo-2">Hacer foto</div>
+            <div class="ub-sub" id="lbl-camera-2">Con la cámara</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEGURO (condicional) -->
+      <div class="form-field" id="field-seg" style="display:none;">
+        <label id="lbl-seg">🛡️ Seguro de buceo <span class="req">*</span></label>
+        <div class="upload-group">
+          <div class="upload-btn" id="btn-seg-file" onclick="triggerFile('file-seg-file','btn-seg-file','seg_archivo')">
+            <input type="file" id="file-seg-file" accept="image/*,.pdf" onchange="handleFile(this,'btn-seg-file','seg_archivo')">
+            <div class="ub-icon">📎</div>
+            <div class="ub-label" id="lbl-attach-3">Adjuntar archivo</div>
+            <div class="ub-sub">PDF, JPG o PNG</div>
+          </div>
+          <div class="upload-btn" id="btn-seg-cam" onclick="triggerFile('file-seg-cam','btn-seg-cam','seg_foto')">
+            <input type="file" id="file-seg-cam" accept="image/*" capture="environment" onchange="handleFile(this,'btn-seg-cam','seg_foto')">
+            <div class="ub-icon">📷</div>
+            <div class="ub-label" id="lbl-photo-3">Hacer foto</div>
+            <div class="ub-sub" id="lbl-camera-3">Con la cámara</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ACOMPAÑANTES -->
+      <div id="companions-container"></div>
+
+      <button class="btn-add-companion" onclick="addCompanion()">
+        <span class="plus-icon">＋</span>
+        <span id="lbl-add-companion">Añadir acompañante</span>
+      </button>
+
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">
+        <span id="lbl-submit">Enviar documentación →</span>
+      </button>
+      <p class="privacy" id="lbl-privacy">Tus datos solo son accesibles por Buceo Hispania</p>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="screen-success" class="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title" id="success-title">¡Documentación enviada!</div>
+    <div class="success-sub" id="success-sub">Hemos recibido toda tu información.<br>Nos vemos en el agua. 🤿</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAO8VpDW_FH98KzDjWVQifAhkka8eT1298",
+  authDomain: "hipaniadocs.firebaseapp.com",
+  databaseURL: "https://hipaniadocs-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "hipaniadocs",
+  storageBucket: "hipaniadocs.firebasestorage.app",
+  messagingSenderId: "960546133872",
+  appId: "1:960546133872:web:83221679b511d1c5ba21b5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Obtener ID de la URL
+const params = new URLSearchParams(window.location.search);
+const personId = params.get('id');
+let personData = null;
+
+// Archivos en memoria (base64)
+window.uploadedFiles = {};
+window.companionCount = 0;
+window.companions = [];
+
+if (!personId) {
+  showScreen('error');
+} else {
+  // Cargar datos de la persona
+  get(ref(db, 'personas/' + personId)).then(snapshot => {
+    if (!snapshot.exists()) { showScreen('error'); return; }
+    personData = snapshot.val();
+    if (personData.completado) { showScreen('success'); return; }
+
+    // Rellenar nombre
+    document.getElementById('input-nombre').value = personData.nombre || '';
+
+    // Mostrar/ocultar campos opcionales
+    if (personData.pedirTitulacion) document.getElementById('field-tit').style.display = 'block';
+    if (personData.pedirSeguro) document.getElementById('field-seg').style.display = 'block';
+
+    // Saludo
+    const firstName = (personData.nombre || '').split(' ')[0];
+    updateGreeting(firstName);
+
+    showScreen('form');
+  }).catch(() => showScreen('error'));
+}
+
+function showScreen(name) {
+  document.getElementById('screen-loading').style.display = 'none';
+  document.getElementById('screen-error').style.display = 'none';
+  document.getElementById('screen-form').style.display = 'none';
+  document.getElementById('screen-success').style.display = 'none';
+  if (name === 'success') document.getElementById('screen-success').style.display = 'block';
+  else if (name === 'error') document.getElementById('screen-error').style.display = 'block';
+  else if (name === 'form') document.getElementById('screen-form').style.display = 'block';
+}
+
+function updateGreeting(name) {
+  const t = window.LANGS[window.currentLang];
+  document.getElementById('form-greeting').innerHTML = t.greeting.replace('{name}', `<strong>${name}</strong>`);
+}
+
+// SUBIR ARCHIVO → convertir a base64
+window.triggerFile = function(inputId, btnId, key) {
+  document.getElementById(inputId).click();
+};
+
+window.handleFile = function(input, btnId, key) {
+  const file = input.files[0];
+  if (!file) return;
+  const maxMB = 5;
+  if (file.size > maxMB * 1024 * 1024) {
+    showToast('⚠️ Archivo muy grande. Máximo ' + maxMB + 'MB');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    window.uploadedFiles[key] = {
+      data: e.target.result,
+      name: file.name,
+      type: file.type
+    };
+    const btn = document.getElementById(btnId);
+    btn.classList.add('done');
+    btn.querySelector('.ub-icon').textContent = '✅';
+    btn.querySelector('.ub-label').textContent = file.name.length > 18 ? file.name.substring(0, 15) + '...' : file.name;
+    btn.querySelector('.ub-sub').textContent = 'Pulsa para cambiar';
+    showToast('✅ Archivo cargado');
+  };
+  reader.readAsDataURL(file);
+};
+
+// ACOMPAÑANTES
+window.addCompanion = function() {
+  window.companionCount++;
+  const n = window.companionCount;
+  const t = window.LANGS[window.currentLang];
+  const container = document.getElementById('companions-container');
+  const div = document.createElement('div');
+  div.className = 'companion-card';
+  div.id = 'companion-' + n;
+  div.innerHTML = `
+    <div class="companion-header">
+      <span class="companion-title">👤 ${t.companionTitle} ${n}</span>
+      <button class="btn-remove" onclick="removeCompanion(${n})">${t.remove}</button>
+    </div>
+    <div class="companion-body">
+      <div class="form-field">
+        <label>${t.fullname} <span class="req">*</span></label>
+        <input type="text" id="comp-nombre-${n}" placeholder="${t.fullname}" autocomplete="off">
+      </div>
+      <div class="form-field">
+        <label>${t.dniNum} <span class="req">*</span></label>
+        <input type="text" id="comp-dni-num-${n}" placeholder="12345678A" autocomplete="off">
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label>${t.dniPhoto} <span class="req">*</span></label>
+        <div class="upload-group">
+          <div class="upload-btn" id="comp-btn-file-${n}" onclick="triggerFile('comp-file-file-${n}','comp-btn-file-${n}','comp_${n}_archivo')">
+            <input type="file" id="comp-file-file-${n}" accept="image/*,.pdf" onchange="handleFile(this,'comp-btn-file-${n}','comp_${n}_archivo')">
+            <div class="ub-icon">📎</div>
+            <div class="ub-label">${t.attach}</div>
+            <div class="ub-sub">PDF, JPG o PNG</div>
+          </div>
+          <div class="upload-btn" id="comp-btn-cam-${n}" onclick="triggerFile('comp-file-cam-${n}','comp-btn-cam-${n}','comp_${n}_foto')">
+            <input type="file" id="comp-file-cam-${n}" accept="image/*" capture="environment" onchange="handleFile(this,'comp-btn-cam-${n}','comp_${n}_foto')">
+            <div class="ub-icon">📷</div>
+            <div class="ub-label">${t.photo}</div>
+            <div class="ub-sub">${t.camera}</div>
+          </div>
+        </div>
+        <div class="warning-box">⚠️ <span>${t.warning}</span></div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+window.removeCompanion = function(n) {
+  const el = document.getElementById('companion-' + n);
+  if (el) { el.style.opacity = '0'; el.style.transition = 'opacity 0.2s'; setTimeout(() => el.remove(), 200); }
+  delete window.uploadedFiles['comp_' + n + '_archivo'];
+  delete window.uploadedFiles['comp_' + n + '_foto'];
+};
+
+// ENVIAR
+window.submitForm = async function() {
+  const dniNum = document.getElementById('input-dni-num').value.trim();
+  if (!dniNum) { showToast('⚠️ ' + (window.LANGS[window.currentLang].errorDni || 'Introduce tu número de DNI')); return; }
+  if (!window.uploadedFiles['dni_archivo'] && !window.uploadedFiles['dni_foto']) {
+    showToast('⚠️ ' + (window.LANGS[window.currentLang].errorDniPhoto || 'Adjunta la foto del DNI')); return;
+  }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.querySelector('#lbl-submit').textContent = '⏳ Enviando...';
+
+  // Recoger acompañantes
+  const companionCards = document.querySelectorAll('.companion-card');
+  const companionsData = [];
+  let valid = true;
+  companionCards.forEach((card) => {
+    const id = card.id.replace('companion-', '');
+    const nombre = document.getElementById('comp-nombre-' + id)?.value.trim();
+    const dniNumComp = document.getElementById('comp-dni-num-' + id)?.value.trim();
+    if (!nombre || !dniNumComp) { valid = false; return; }
+    companionsData.push({
+      nombre,
+      dniNum: dniNumComp,
+      dni_archivo: window.uploadedFiles['comp_' + id + '_archivo'] || null,
+      dni_foto: window.uploadedFiles['comp_' + id + '_foto'] || null,
+    });
+  });
+
+  if (!valid) {
+    showToast('⚠️ Rellena los datos de todos los acompañantes');
+    btn.disabled = false;
+    btn.querySelector('#lbl-submit').textContent = window.LANGS[window.currentLang].submit;
+    return;
+  }
+
+  const payload = {
+    dniNum,
+    dni_archivo: window.uploadedFiles['dni_archivo'] || null,
+    dni_foto: window.uploadedFiles['dni_foto'] || null,
+    tit_archivo: window.uploadedFiles['tit_archivo'] || null,
+    tit_foto: window.uploadedFiles['tit_foto'] || null,
+    seg_archivo: window.uploadedFiles['seg_archivo'] || null,
+    seg_foto: window.uploadedFiles['seg_foto'] || null,
+    acompanantes: companionsData,
+    numAcompanantes: companionsData.length,
+    completado: true,
+    fechaEnvio: Date.now(),
+    titulacionOk: !!(window.uploadedFiles['tit_archivo'] || window.uploadedFiles['tit_foto']),
+    seguroOk: !!(window.uploadedFiles['seg_archivo'] || window.uploadedFiles['seg_foto']),
+  };
+
+  try {
+    await update(ref(db, 'personas/' + personId), payload);
+    showScreen('success');
+    // Traducir pantalla de éxito
+    const t = window.LANGS[window.currentLang];
+    document.getElementById('success-title').textContent = t.successTitle;
+    document.getElementById('success-sub').innerHTML = t.successSub;
+  } catch (e) {
+    showToast('❌ Error al enviar. Inténtalo de nuevo.');
+    btn.disabled = false;
+    btn.querySelector('#lbl-submit').textContent = window.LANGS[window.currentLang].submit;
+  }
+};
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// Exponer showScreen globalmente
+window._showScreen = showScreen;
+window._updateGreeting = updateGreeting;
+window._personData = () => personData;
+</script>
+
+<script>
+// TRADUCCIONES
+window.currentLang = 'es';
+window.LANGS = {
+  es:{
+    hdrTitle:'Documentación necesaria para el buceo',
+    hdrSub:'en la Reserva de Cabo Tiñoso',
+    greeting:'Hola {name}, rellena este formulario con tus datos y adjunta los documentos solicitados.',
+    titular:'Titular', yourData:'Tus datos',
+    fullname:'Nombre completo', dniNum:'📄 Número de DNI / Pasaporte',
+    dniPhoto:'📄 Foto del DNI', attach:'Adjuntar archivo', photo:'Hacer foto', camera:'Con la cámara',
+    warning:'Solo la <strong>parte delantera</strong> del DNI. No es necesario fotografiar el reverso.',
+    tit:'🏅 Titulación de buceo', seg:'🛡️ Seguro de buceo',
+    addCompanion:'Añadir acompañante', companionTitle:'Acompañante', remove:'✕ Eliminar',
+    submit:'Enviar documentación →', privacy:'Tus datos solo son accesibles por Buceo Hispania',
+    errorDni:'Introduce tu número de DNI', errorDniPhoto:'Adjunta la foto del DNI',
+    successTitle:'¡Documentación enviada!', successSub:'Hemos recibido toda tu información.<br>Nos vemos en el agua. 🤿'
+  },
+  en:{
+    hdrTitle:'Required documentation for diving',
+    hdrSub:'in the Cabo Tiñoso Marine Reserve',
+    greeting:'Hello {name}, please fill in this form with your details and attach the required documents.',
+    titular:'Main diver', yourData:'Your details',
+    fullname:'Full name', dniNum:'📄 ID / Passport number',
+    dniPhoto:'📄 ID photo', attach:'Attach file', photo:'Take photo', camera:'Use camera',
+    warning:'<strong>Front side only</strong>. There is no need to photograph the back.',
+    tit:'🏅 Diving certification', seg:'🛡️ Diving insurance',
+    addCompanion:'Add companion', companionTitle:'Companion', remove:'✕ Remove',
+    submit:'Submit documentation →', privacy:'Your data is only accessible by Buceo Hispania',
+    errorDni:'Please enter your ID number', errorDniPhoto:'Please attach your ID photo',
+    successTitle:'Documentation submitted!', successSub:'We have received all your information.<br>See you in the water. 🤿'
+  },
+  fr:{
+    hdrTitle:'Documents requis pour la plongée',
+    hdrSub:'dans la Réserve Marine de Cabo Tiñoso',
+    greeting:'Bonjour {name}, veuillez remplir ce formulaire avec vos informations et joindre les documents requis.',
+    titular:'Titulaire', yourData:'Vos données',
+    fullname:'Nom complet', dniNum:"📄 Numéro de pièce d'identité / Passeport",
+    dniPhoto:"📄 Photo de la pièce d'identité", attach:'Joindre un fichier', photo:'Prendre une photo', camera:"Appareil photo",
+    warning:"<strong>Face avant uniquement</strong>. Il n'est pas nécessaire de photographier le verso.",
+    tit:'🏅 Brevet de plongée', seg:'🛡️ Assurance plongée',
+    addCompanion:'Ajouter un accompagnant', companionTitle:'Accompagnant', remove:'✕ Supprimer',
+    submit:'Envoyer les documents →', privacy:'Vos données ne sont accessibles que par Buceo Hispania',
+    errorDni:"Veuillez entrer votre numéro d'identité", errorDniPhoto:"Veuillez joindre la photo de votre pièce d'identité",
+    successTitle:'Documents envoyés !', successSub:"Nous avons reçu toutes vos informations.<br>À bientôt dans l'eau. 🤿"
+  }
+};
+
+function setLang(lang, btn) {
+  window.currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const t = window.LANGS[lang];
+
+  document.getElementById('hdr-title').textContent = t.hdrTitle;
+  document.getElementById('hdr-sub').textContent = t.hdrSub;
+  document.getElementById('lbl-titular').textContent = t.titular;
+  document.getElementById('lbl-your-data').textContent = t.yourData;
+  document.getElementById('lbl-fullname').innerHTML = t.fullname + ' <span class="req">*</span>';
+  document.getElementById('lbl-dninum').innerHTML = t.dniNum + ' <span class="req">*</span>';
+  document.getElementById('lbl-dniphoto').innerHTML = t.dniPhoto + ' <span class="req">*</span>';
+  document.getElementById('lbl-attach-1').textContent = t.attach;
+  document.getElementById('lbl-photo-1').textContent = t.photo;
+  document.getElementById('lbl-camera-1').textContent = t.camera;
+  document.getElementById('lbl-warning').innerHTML = t.warning;
+  document.getElementById('lbl-tit').innerHTML = t.tit + ' <span class="req">*</span>';
+  document.getElementById('lbl-seg').innerHTML = t.seg + ' <span class="req">*</span>';
+  document.getElementById('lbl-attach-2').textContent = t.attach;
+  document.getElementById('lbl-photo-2').textContent = t.photo;
+  document.getElementById('lbl-camera-2').textContent = t.camera;
+  document.getElementById('lbl-attach-3').textContent = t.attach;
+  document.getElementById('lbl-photo-3').textContent = t.photo;
+  document.getElementById('lbl-camera-3').textContent = t.camera;
+  document.getElementById('lbl-add-companion').textContent = t.addCompanion;
+  document.getElementById('lbl-submit').textContent = t.submit;
+  document.getElementById('lbl-privacy').textContent = t.privacy;
+
+  // Actualizar acompañantes existentes
+  document.querySelectorAll('.companion-title').forEach((el, i) => {
+    el.textContent = `👤 ${t.companionTitle} ${i + 1}`;
+  });
+  document.querySelectorAll('.btn-remove').forEach(el => { el.textContent = t.remove; });
+
+  // Actualizar saludo
+  if (window._personData && window._personData()) {
+    const firstName = (window._personData().nombre || '').split(' ')[0];
+    window._updateGreeting && window._updateGreeting(firstName);
+  }
+}
+</script>
+</body>
+</html>

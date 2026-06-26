@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hispania Docs — Resumen</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ocean:#0B4F6C;--ocean-mid:#1A6E8E;--ocean-light:#E8F4F8;
+  --surface:#F7FAFB;--white:#fff;--ink:#0D1B22;--muted:#6B8898;
+  --border:#D4E5ED;--green:#1A9E6E;--green-bg:#E6F7F2;
+  --amber:#D97706;--amber-bg:#FEF3C7;
+  --shadow:0 1px 3px rgba(11,79,108,0.08),0 4px 16px rgba(11,79,108,0.06);
+  --shadow-lg:0 8px 32px rgba(11,79,108,0.14);
+}
+body{font-family:'Inter',sans-serif;background:var(--surface);min-height:100vh;}
+
+/* TOPBAR */
+.topbar{background:var(--ocean);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,0.2);}
+.topbar-left{display:flex;align-items:center;gap:14px;}
+.btn-back{background:rgba(255,255,255,0.12);border:none;color:white;font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.btn-back:hover{background:rgba(255,255,255,0.2);}
+.topbar-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:white;}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px;}
+.topbar-actions{display:flex;gap:8px;flex-shrink:0;}
+.btn-action{padding:9px 16px;border:none;border-radius:9px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.btn-print{background:white;color:var(--ocean);}
+.btn-print:hover{background:#f0f0f0;}
+.btn-pdf{background:var(--ocean-mid);color:white;}
+.btn-pdf:hover{background:#0d5a7a;}
+
+.container{max-width:880px;margin:0 auto;padding:24px 20px;}
+
+/* PERSON BLOCK */
+.person-block{background:white;border:1.5px solid var(--border);border-radius:14px;margin-bottom:18px;overflow:hidden;box-shadow:var(--shadow);}
+.person-header{background:var(--ocean-light);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.person-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--ocean);}
+.person-phone{font-size:12px;color:var(--muted);margin-top:2px;}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+.badge-ok{background:var(--green-bg);color:var(--green);}
+.badge-pending{background:var(--amber-bg);color:var(--amber);}
+
+/* FIELDS GRID */
+.fields-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 20px;background:white;}
+.copy-field{display:flex;flex-direction:column;gap:5px;}
+.copy-field-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+.copy-row{display:flex;gap:6px;align-items:center;}
+.copy-value{flex:1;padding:8px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--ink);font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:default;}
+.btn-copy{padding:8px 12px;background:var(--ocean-light);border:1.5px solid var(--border);border-radius:8px;font-size:11px;font-weight:600;color:var(--ocean);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.15s;}
+.btn-copy:hover{background:var(--ocean);color:white;}
+.btn-copy.copied{background:var(--green);color:white;border-color:var(--green);}
+
+/* DOCS ROW */
+.docs-section{padding:0 20px 16px;background:white;}
+.docs-section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;}
+.docs-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.doc-thumb{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;width:140px;}
+.doc-thumb-header{padding:6px 10px;background:var(--surface);font-size:10px;font-weight:600;color:var(--ocean);}
+.doc-thumb-img{width:100%;height:80px;object-fit:cover;display:block;cursor:pointer;}
+.doc-thumb-img.placeholder{background:linear-gradient(135deg,#e8f4f8,#d4e5ed);display:flex;align-items:center;justify-content:center;font-size:28px;height:80px;}
+.doc-thumb-footer{padding:5px 10px;font-size:10px;color:var(--green);font-weight:600;}
+
+/* COMPANION BLOCK */
+.companion-block{border-left:3px solid var(--ocean-mid);margin:0 20px 16px;border-radius:0 10px 10px 0;overflow:hidden;background:white;border-top:1px solid var(--border);}
+.companion-header-inner{background:#E8F4F8;padding:8px 14px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--ocean-mid);}
+
+/* PENDING */
+.pending-block{background:white;border:1.5px dashed var(--border);border-radius:14px;margin-bottom:18px;overflow:hidden;opacity:0.6;}
+.pending-header{background:var(--amber-bg);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
+.pending-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--amber);}
+.pending-body{padding:14px 20px;text-align:center;color:var(--muted);font-size:13px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:white;padding:12px 24px;border-radius:10px;font-size:13px;font-weight:500;transition:transform 0.3s;z-index:100;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center;}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain;}
+.lightbox-close{position:absolute;top:20px;right:24px;color:white;font-size:32px;cursor:pointer;line-height:1;}
+
+/* PRINT */
+@media print {
+  .topbar,.btn-copy,.lightbox{display:none!important;}
+  .person-block,.pending-block{break-inside:avoid;box-shadow:none;border:1px solid #ccc;}
+  .doc-thumb-img{cursor:default;}
+  body{background:white;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="admin.html" class="btn-back">← Admin</a>
+    <div>
+      <div class="topbar-title">📄 Resumen general</div>
+      <div class="topbar-sub">Pulsa "Copiar" en cada casilla · Las fotos se pueden ampliar</div>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn-action btn-print" onclick="window.print()">🖨️ Imprimir</button>
+    <button class="btn-action btn-pdf" onclick="generatePDF()">📄 Generar PDF</button>
+  </div>
+</div>
+
+<div class="container" id="main-container">
+  <div class="empty">⏳ Cargando datos...</div>
+</div>
+
+<!-- LIGHTBOX para ver fotos a tamaño completo -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="Documento">
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- jsPDF para generar PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAO8VpDW_FH98KzDjWVQifAhkka8eT1298",
+  authDomain: "hipaniadocs.firebaseapp.com",
+  databaseURL: "https://hipaniadocs-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "hipaniadocs",
+  storageBucket: "hipaniadocs.firebasestorage.app",
+  messagingSenderId: "960546133872",
+  appId: "1:960546133872:web:83221679b511d1c5ba21b5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+onValue(ref(db, 'personas'), (snapshot) => {
+  const data = snapshot.val();
+  render(data);
+  window._allData = data;
+});
+
+function render(data) {
+  const container = document.getElementById('main-container');
+  if (!data) { container.innerHTML = '<div class="empty">No hay datos todavía.</div>'; return; }
+
+  const entries = Object.entries(data).sort((a, b) => (a[1].fechaCreacion || 0) - (b[1].fechaCreacion || 0));
+  let html = '';
+
+  entries.forEach(([id, p], i) => {
+    if (p.completado) {
+      // Documentos del titular
+      let docsHtml = buildDocThumbs(p);
+
+      // Campos copiables
+      html += `
+      <div class="person-block">
+        <div class="person-header">
+          <div>
+            <div class="person-name">${i + 1}. ${p.nombre || '—'}</div>
+            <div class="person-phone">${p.telefono || '—'}</div>
+          </div>
+          <span class="badge badge-ok">✅ Completo</span>
+        </div>
+        <div class="fields-grid">
+          <div class="copy-field">
+            <div class="copy-field-label">Número de DNI</div>
+            <div class="copy-row">
+              <div class="copy-value">${p.dniNum || '—'}</div>
+              <button class="btn-copy" onclick="copyText('${escStr(p.dniNum || '')}',this)">Copiar</button>
+            </div>
+          </div>
+          <div class="copy-field">
+            <div class="copy-field-label">Nombre completo</div>
+            <div class="copy-row">
+              <div class="copy-value">${p.nombre || '—'}</div>
+              <button class="btn-copy" onclick="copyText('${escStr(p.nombre || '')}',this)">Copiar</button>
+            </div>
+          </div>
+          <div class="copy-field">
+            <div class="copy-field-label">Teléfono</div>
+            <div class="copy-row">
+              <div class="copy-value">${p.telefono || '—'}</div>
+              <button class="btn-copy" onclick="copyText('${escStr(p.telefono || '')}',this)">Copiar</button>
+            </div>
+          </div>
+        </div>
+        <div class="docs-section">
+          <div class="docs-section-title">Documentos recibidos</div>
+          <div class="docs-grid">${docsHtml}</div>
+        </div>
+        ${buildCompanions(p.acompanantes)}
+      </div>`;
+    } else {
+      html += `
+      <div class="pending-block">
+        <div class="pending-header">
+          <div>
+            <div class="pending-name">${i + 1}. ${p.nombre || '—'}</div>
+            <div style="font-size:12px;color:var(--amber);margin-top:2px;">${p.telefono || ''}</div>
+          </div>
+          <span class="badge badge-pending">⏳ Pendiente</span>
+        </div>
+        <div class="pending-body">Aún no ha enviado la documentación</div>
+      </div>`;
+    }
+  });
+
+  container.innerHTML = html || '<div class="empty">No hay datos todavía.</div>';
+}
+
+function buildDocThumbs(p) {
+  let html = '';
+  if (p.dni_archivo || p.dni_foto) {
+    const src = (p.dni_archivo || p.dni_foto).data;
+    html += docThumb('📄 DNI', src);
+  }
+  if (p.tit_archivo || p.tit_foto) {
+    const src = (p.tit_archivo || p.tit_foto).data;
+    html += docThumb('🏅 Titulación', src);
+  }
+  if (p.seg_archivo || p.seg_foto) {
+    const src = (p.seg_archivo || p.seg_foto).data;
+    html += docThumb('🛡️ Seguro', src);
+  }
+  return html || '<span style="color:var(--muted);font-size:13px;">Sin archivos</span>';
+}
+
+function docThumb(label, src) {
+  if (!src) return '';
+  const isImg = src.startsWith('data:image');
+  if (isImg) {
+    return `<div class="doc-thumb">
+      <div class="doc-thumb-header">${label}</div>
+      <img class="doc-thumb-img" src="${src}" onclick="openLightbox('${src}')" title="Pulsa para ampliar">
+      <div class="doc-thumb-footer">✓ Recibido · Pulsa para ampliar</div>
+    </div>`;
+  } else {
+    // PDF
+    return `<div class="doc-thumb">
+      <div class="doc-thumb-header">${label}</div>
+      <div class="doc-thumb-img placeholder">📄</div>
+      <div class="doc-thumb-footer" style="cursor:pointer;" onclick="downloadFile('${src}','documento.pdf')">⬇️ Descargar PDF</div>
+    </div>`;
+  }
+}
+
+function buildCompanions(acompanantes) {
+  if (!acompanantes || !acompanantes.length) return '';
+  let html = '';
+  acompanantes.forEach((c, i) => {
+    let docsC = '';
+    if (c.dni_archivo || c.dni_foto) {
+      const src = (c.dni_archivo || c.dni_foto).data;
+      docsC = docThumb('📄 DNI', src);
+    }
+    html += `
+    <div class="companion-block">
+      <div class="companion-header-inner">👤 Acompañante ${i + 1}</div>
+      <div class="fields-grid" style="padding:12px 14px;">
+        <div class="copy-field">
+          <div class="copy-field-label">Número de DNI</div>
+          <div class="copy-row">
+            <div class="copy-value">${c.dniNum || '—'}</div>
+            <button class="btn-copy" onclick="copyText('${escStr(c.dniNum || '')}',this)">Copiar</button>
+          </div>
+        </div>
+        <div class="copy-field">
+          <div class="copy-field-label">Nombre completo</div>
+          <div class="copy-row">
+            <div class="copy-value">${c.nombre || '—'}</div>
+            <button class="btn-copy" onclick="copyText('${escStr(c.nombre || '')}',this)">Copiar</button>
+          </div>
+        </div>
+      </div>
+      ${docsC ? `<div class="docs-section" style="padding:0 14px 14px;"><div class="docs-grid">${docsC}</div></div>` : ''}
+    </div>`;
+  });
+  return html;
+}
+
+function escStr(s) { return s.replace(/'/g, "\\'"); }
+
+window.copyText = function(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+};
+
+window.openLightbox = function(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('show');
+};
+window.closeLightbox = function() {
+  document.getElementById('lightbox').classList.remove('show');
+  document.getElementById('lightbox-img').src = '';
+};
+
+window.downloadFile = function(src, name) {
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = name;
+  a.click();
+};
+
+window.generatePDF = async function() {
+  if (!window._allData) { showToast('⚠️ Sin datos'); return; }
+  showToast('⏳ Generando PDF...');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const entries = Object.entries(window._allData)
+    .filter(([,p]) => p.completado)
+    .sort((a, b) => (a[1].fechaCreacion || 0) - (b[1].fechaCreacion || 0));
+
+  if (!entries.length) { showToast('⚠️ No hay personas completadas'); return; }
+
+  let y = 20;
+  const addPage = () => { doc.addPage(); y = 20; };
+  const checkY = (needed = 40) => { if (y + needed > 270) addPage(); };
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(11, 79, 108);
+  doc.text('Hispania Docs — Resumen', 20, y); y += 8;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(100, 100, 100);
+  doc.text('Documentación necesaria para el buceo en la Reserva de Cabo Tiñoso', 20, y); y += 12;
+
+  for (const [, p] of entries) {
+    checkY(50);
+    doc.setFillColor(232, 244, 248);
+    doc.rect(15, y - 4, 180, 10, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);
+    doc.setTextColor(11, 79, 108);
+    doc.text(p.nombre || '—', 18, y + 3); y += 12;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(50, 50, 50);
+    doc.text(`DNI: ${p.dniNum || '—'}`, 18, y); y += 6;
+    doc.text(`Teléfono: ${p.telefono || '—'}`, 18, y); y += 8;
+
+    // Imagen DNI
+    const dniSrc = (p.dni_foto || p.dni_archivo);
+    if (dniSrc && dniSrc.data && dniSrc.data.startsWith('data:image')) {
+      checkY(60);
+      doc.setFontSize(9);
+      doc.setTextColor(100);
+      doc.text('Foto DNI:', 18, y); y += 4;
+      try {
+        doc.addImage(dniSrc.data, 'JPEG', 18, y, 80, 50);
+        y += 55;
+      } catch(e) { doc.text('[Imagen no disponible]', 18, y); y += 8; }
+    }
+
+    // Acompañantes
+    if (p.acompanantes && p.acompanantes.length) {
+      p.acompanantes.forEach((c, ci) => {
+        checkY(40);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(26, 110, 142);
+        doc.text(`  Acompañante ${ci + 1}: ${c.nombre || '—'}`, 18, y); y += 6;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(50, 50, 50);
+        doc.text(`  DNI: ${c.dniNum || '—'}`, 22, y); y += 6;
+        const cSrc = c.dni_foto || c.dni_archivo;
+        if (cSrc && cSrc.data && cSrc.data.startsWith('data:image')) {
+          checkY(55);
+          try {
+            doc.addImage(cSrc.data, 'JPEG', 22, y, 70, 44);
+            y += 48;
+          } catch(e) {}
+        }
+      });
+    }
+    y += 8;
+    doc.setDrawColor(200, 220, 230);
+    doc.line(15, y - 4, 195, y - 4);
+  }
+
+  doc.save('hispania-docs-resumen.pdf');
+  showToast('✅ PDF generado');
+};
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
